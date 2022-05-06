@@ -1,0 +1,214 @@
+########################################
+# CheatGuard AntiCheat by DerRedstoner #
+########################################
+
+settings:
+  # - - ->  - - -> - - -> - - -> - - -> - - -> - - -> - - -> - - -> - - ->
+  # If a player is using movement hacks, the anticheat can prevent it and set the player back
+  #
+  # GROUND - Teleport the player to the last known ground location
+  # NONE - The anticheat will not affect player movement at all (silent mode)
+  setback: "NONE"
+  # - - ->  - - -> - - -> - - -> - - -> - - -> - - -> - - -> - - -> - - ->
+  # If a player is opped, they are able to bypass the anticheat
+  #
+  # FULL - Bypass flags & punishments
+  # PUNISH - Bypass punishments
+  # NONE - Be treated like a normal player
+  op-bypass: "PUNISH"
+  # - - ->  - - -> - - -> - - -> - - -> - - -> - - -> - - -> - - -> - - ->
+  # After how many seconds should violations of a check be cleared after the first flag?
+  #
+  # default: 300
+  reset-vl: 300
+  # - - ->  - - -> - - -> - - -> - - -> - - -> - - -> - - -> - - -> - - ->
+  # Enable this if you want everyone to see flags for the anticheat!
+  #
+  # DANGEROUS! Leave on false for production servers!
+  test-mode: false
+  # - - ->  - - -> - - -> - - -> - - -> - - -> - - -> - - -> - - -> - - ->
+  # Disable checks when TPS drops below this value
+  #
+  # Recommended: 18.0 - 19.5
+  exempt-tps: 19.0
+
+punishments:
+  # - - ->  - - -> - - -> - - -> - - -> - - -> - - -> - - -> - - -> - - ->
+  # Would you like for punishments to be enabled?
+  enabled: false
+  # - - ->  - - -> - - -> - - -> - - -> - - -> - - -> - - -> - - -> - - ->
+  # If a check has bannable set to true, the following command(s) will be executed
+  #
+  # Placeholders: %player%, %check%
+  commands:
+    - "kick %player% You were detected for %check%"
+
+messages:
+  # - - ->  - - -> - - -> - - -> - - -> - - -> - - -> - - -> - - -> - - ->
+  # What should ingame alerts look like when someone is cheating?
+  #
+  # Placeholders: %player%, %check%, %type%, %vl%, %maxvl%, %vlbar%
+  alerts: "&f[&9CheatGuard&f] &b%player% &7failed &b%check% &7(&9%type%&7) &7x%vl%"
+  alerts-experimental: "&f[&9CheatGuard&f] &b%player% &7failed &b%check% &7(&9%type%&7) &7x%vl% &c(Exp)"
+
+# - - ->  - - -> - - -> - - -> - - -> - - -> - - -> - - -> - - -> - - ->
+# Here, you're able to customize values for specific checks to fit your needs
+#
+# CATEGORY:
+#   Check:
+#     enabled: true/false # Should the check be active?
+#     bannable: true/false # Should the check execute a punishment when enough violations are reached?
+#     banVL: X # How often does a player need to flag this check in order to execute a punishment?
+COMBAT:
+  AimA:
+    enabled: true
+    bannable: true
+    banVL: 20
+  AimB:
+    enabled: true
+    bannable: true
+    banVL: 5
+  AimC:
+    enabled: true
+    bannable: true
+    banVL: 30
+  AimD:
+    enabled: true
+    bannable: true
+    banVL: 10
+  AimE:
+    enabled: true
+    bannable: true
+    banVL: 10
+  HitboxA:
+    enabled: true
+    bannable: true
+    banVL: 1
+  KillAuraA:
+    enabled: true
+    bannable: true
+    banVL: 5
+  KillAuraB:
+    enabled: true
+    bannable: true
+    banVL: 10
+  KillAuraC:
+    enabled: true
+    bannable: true
+    banVL: 5
+  VelocityA:
+    enabled: true
+    bannable: true
+    banVL: 5
+  VelocityB:
+    enabled: true
+    bannable: true
+    banVL: 15
+
+MOVEMENT:
+  FlyA:
+    enabled: true
+    bannable: true
+    banVL: 20
+  FlyB:
+    enabled: true
+    bannable: true
+    banVL: 10
+  JesusA:
+    enabled: true
+    bannable: true
+    banVL: 10
+  JesusB:
+    enabled: true
+    bannable: true
+    banVL: 7
+  MoveA:
+    enabled: true
+    bannable: true
+    banVL: 3
+  MoveB:
+    enabled: true
+    bannable: true
+    banVL: 10
+  MoveC:
+    enabled: true
+    bannable: true
+    banVL: 5
+  MoveD:
+    enabled: true
+    bannable: true
+    banVL: 10
+  MoveE:
+    enabled: true
+    bannable: true
+    banVL: 5
+  MoveF:
+    enabled: true
+    bannable: true
+    banVL: 10
+  MoveG:
+    enabled: true
+    bannable: true
+    banVL: 10
+  SpeedA:
+    enabled: true
+    bannable: true
+    banVL: 25
+  SpeedB:
+    enabled: true
+    bannable: true
+    banVL: 15
+
+PACKET:
+  BadPacketA:
+    enabled: true
+    bannable: true
+    banVL: 1
+  BadPacketB:
+    enabled: true
+    bannable: true
+    banVL: 5
+  BadPacketC:
+    enabled: true
+    bannable: true
+    banVL: 1
+  BadPacketD:
+    enabled: true
+    bannable: true
+    banVL: 3
+  BadPacketE:
+    enabled: true
+    bannable: true
+    banVL: 10
+  BadPacketF:
+    enabled: true
+    bannable: true
+    banVL: 5
+  BadPacketG:
+    enabled: true
+    bannable: true
+    banVL: 1
+  BadPacketH:
+    enabled: true
+    bannable: true
+    banVL: 20
+  BadPacketI:
+    enabled: true
+    bannable: true
+    banVL: 1
+  BadPacketJ:
+    enabled: true
+    bannable: false
+    banVL: 5
+  NoFallA:
+    enabled: true
+    bannable: true
+    banVL: 10
+  NoFallB:
+    enabled: true
+    bannable: true
+    banVL: 10
+  TimerA:
+    enabled: true
+    bannable: true
+    banVL: 15
