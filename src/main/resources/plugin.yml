@@ -4,6 +4,8 @@ main: de.derredstoner.anticheat.CheatGuard
 load: POSTWORLD
 depend:
   - ProtocolLib
+softdepend:
+  - ViaVersion
 
 commands:
   cheatguard:
