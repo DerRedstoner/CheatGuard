@@ -29,6 +29,7 @@ public class MoveC extends Check {
 
             if(wrapper.isMoving()) {
                 if(data.movementProcessor.getVelocityV() > 0
+                        || data.actionProcessor.elytraFlying
                         || data.movementProcessor.teleporting) {
                     return;
                 }

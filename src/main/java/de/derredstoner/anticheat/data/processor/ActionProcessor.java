@@ -5,6 +5,7 @@ import de.derredstoner.anticheat.data.PlayerData;
 import de.derredstoner.anticheat.packet.wrapper.client.*;
 import de.derredstoner.anticheat.packet.wrapper.server.WrappedPacketPlayOutCloseWindow;
 import de.derredstoner.anticheat.packet.wrapper.server.WrappedPacketPlayOutOpenWindow;
+import org.bukkit.Bukkit;
 import org.bukkit.entity.Entity;
 
 public class ActionProcessor {
@@ -12,7 +13,7 @@ public class ActionProcessor {
     private final PlayerData data;
 
     public Entity lastTarget;
-    public boolean sprinting, sneaking, inventoryOpen, isDigging, pendingInventoryOpen;
+    public boolean sprinting, sneaking, inventoryOpen, isDigging, pendingInventoryOpen, elytraFlying;
     public long vehicleTicks, lastSprintToggle, lastHit, lastBlockPlace;
     public short transactionId;
 
@@ -34,6 +35,8 @@ public class ActionProcessor {
                 sneaking = true;
             } else if(wrapper.getAction() == EnumWrappers.PlayerAction.STOP_SNEAKING) {
                 sneaking = false;
+            } else if(wrapper.getAction() == EnumWrappers.PlayerAction.START_FALL_FLYING) {
+                elytraFlying = true;
             }
         } else if(e instanceof WrappedPacketPlayInUseEntity) {
             WrappedPacketPlayInUseEntity wrapper = (WrappedPacketPlayInUseEntity) e;
@@ -83,6 +86,10 @@ public class ActionProcessor {
         } else if(e instanceof WrappedPacketPlayOutOpenWindow) {
             transactionId = (short) (data.connectionProcessor.transactionID + 1);
             pendingInventoryOpen = true;
+        } else if(e instanceof WrappedPacketPlayInFlying) {
+            if(elytraFlying && data.movementProcessor.deltaY == 0 && data.movementProcessor.clientGround && data.movementProcessor.mathGround) {
+                elytraFlying = false;
+            }
         }
     }
 

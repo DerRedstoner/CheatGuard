@@ -1,6 +1,7 @@
 package de.derredstoner.anticheat;
 
 import com.comphenix.protocol.ProtocolLibrary;
+import de.derredstoner.anticheat.command.CheatGuardCommand;
 import de.derredstoner.anticheat.data.DataManager;
 import de.derredstoner.anticheat.config.Config;
 import de.derredstoner.anticheat.handler.watcher.ServerWatcher;
@@ -46,6 +47,8 @@ public class CheatGuard extends JavaPlugin {
         Bukkit.getPluginManager().registerEvents(new BukkitListener(), this);
 
         ProtocolLibrary.getProtocolManager().addPacketListener(new PacketHandler(this));
+
+        getCommand("cheatguard").setExecutor(new CheatGuardCommand());
     }
 
     @Override

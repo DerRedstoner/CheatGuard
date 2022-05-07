@@ -33,6 +33,7 @@ public class SpeedB extends Check {
             if(data.movementProcessor.teleporting
                     || data.player.getAllowFlight()
                     || data.movementProcessor.touchingLiquid
+                    || data.actionProcessor.elytraFlying
                     || data.movementProcessor.getVelocityH() > 0) {
                 return;
             }

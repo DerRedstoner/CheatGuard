@@ -20,6 +20,7 @@ de\derredstoner\anticheat\check\impl\movement\fly\FlyB.class
 de\derredstoner\anticheat\packet\wrapper\client\WrappedPacketPlayInHeldItemSlot.class
 de\derredstoner\anticheat\packet\wrapper\server\WrappedPacketPlayOutPosition.class
 de\derredstoner\anticheat\check\impl\combat\killaura\KillAuraC.class
+de\derredstoner\anticheat\command\CheatGuardCommand.class
 de\derredstoner\anticheat\check\impl\combat\aim\AimD.class
 de\derredstoner\anticheat\util\Velocity.class
 de\derredstoner\anticheat\check\impl\movement\speed\SpeedB.class
@@ -74,7 +75,6 @@ de\derredstoner\anticheat\check\impl\packet\badpacket\BadPacketG.class
 de\derredstoner\anticheat\check\impl\combat\aim\AimB.class
 de\derredstoner\anticheat\packet\wrapper\client\WrappedPacketPlayInEntityAction.class
 de\derredstoner\anticheat\check\impl\combat\hitbox\HitboxA.class
-de\derredstoner\anticheat\check\impl\movement\jesus\JesusB.class
 de\derredstoner\anticheat\packet\wrapper\client\WrappedPacketPlayInAbilities.class
 de\derredstoner\anticheat\check\impl\packet\nofall\NoFallA.class
 de\derredstoner\anticheat\packet\wrapper\client\WrappedPacketPlayInResourcePackStatus.class

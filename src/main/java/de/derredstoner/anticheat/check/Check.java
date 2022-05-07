@@ -12,6 +12,7 @@ import net.md_5.bungee.api.chat.TextComponent;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
+import org.bukkit.scheduler.BukkitRunnable;
 
 import java.util.List;
 
@@ -98,13 +99,12 @@ public class Check {
 
         if(bannable && violations >= banVL && !checkInfo.experimental()) {
             if(CheatGuard.getInstance().config.getConfig().getBoolean("punishments.enabled")
-                    && CheatGuard.getInstance().config.getConfig().getBoolean(checkInfo.category().name()+"."+checkInfo.name().replaceAll("[^a-zA-Z]+", "")+".bannable")
-                    && ((CheatGuard.getInstance().config.getConfig().getString("settings.op-bypass").equalsIgnoreCase("full") || CheatGuard.getInstance().config.getConfig().getString("settings.op-bypass").equalsIgnoreCase("punish")) && data.player.isOp())) {
+                    && (!((CheatGuard.getInstance().config.getConfig().getString("settings.op-bypass").equalsIgnoreCase("full") || CheatGuard.getInstance().config.getConfig().getString("settings.op-bypass").equalsIgnoreCase("punish")) && data.player.isOp()) || !data.player.isOp())) {
                 List<String> commands = CheatGuard.getInstance().config.getConfig().getStringList("punishments.commands");
 
                 Bukkit.getScheduler().runTask(CheatGuard.getInstance(), () -> {
                     for(String command : commands) {
-                        Bukkit.dispatchCommand(Bukkit.getConsoleSender(), ChatColor.translateAlternateColorCodes('&', command.replace("%player%", data.player.getName())));
+                        Bukkit.dispatchCommand(Bukkit.getConsoleSender(), ChatColor.translateAlternateColorCodes('&', command.replace("%player%", data.player.getName()).replace("%check%", checkInfo.name())));
                     }
                     for(Check check : data.getChecks()) {
                         check.violations = 0;
@@ -121,7 +121,9 @@ public class Check {
             switch(type) {
                 case "GROUND":
                     CustomLocation loc = data.movementProcessor.lastGroundLocation != null ? data.movementProcessor.lastGroundLocation : data.movementProcessor.location;
-                    data.player.teleport(loc.toLocation(data.player));
+                    Bukkit.getScheduler().runTask(CheatGuard.getInstance(), () -> {
+                        data.player.teleport(loc.toLocation(data.player));
+                    });
                     break;
                 default:
                     break;

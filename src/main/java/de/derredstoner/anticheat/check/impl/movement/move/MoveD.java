@@ -26,6 +26,7 @@ public class MoveD extends Check {
         if(wrappedPacket instanceof WrappedPacketPlayInFlying) {
             if(data.movementProcessor.teleportTicks < 20
                     || data.movementProcessor.getVelocityH() > 0
+                    || data.actionProcessor.elytraFlying
                     || data.player.getVehicle() != null
                     || data.player.getAllowFlight()) {
                 return;

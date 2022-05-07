@@ -25,6 +25,7 @@ public class SpeedA extends Check {
         if(wrappedPacket instanceof WrappedPacketPlayInFlying) {
             if(data.movementProcessor.collidingHorizontally
                     || data.player.getAllowFlight()
+                    || data.actionProcessor.elytraFlying
                     || data.movementProcessor.teleportTicks < 40
                     || !data.movementProcessor.isChunkLoaded
                     || data.movementProcessor.getVelocityH() > 0

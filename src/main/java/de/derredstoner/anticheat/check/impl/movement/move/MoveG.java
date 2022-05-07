@@ -27,6 +27,7 @@ public class MoveG extends Check {
                     || data.movementProcessor.slimeTicks < 10
                     || data.movementProcessor.teleporting
                     || data.player.getVehicle() != null
+                    || data.actionProcessor.elytraFlying
                     || data.movementProcessor.getVelocityH() > 0) {
                 buffer = 0;
                 return;

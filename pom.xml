@@ -79,6 +79,12 @@
             <scope>provided</scope>
         </dependency>
         <dependency>
+            <groupId>org.github.spigot</groupId>
+            <artifactId>1.16.5</artifactId>
+            <version>1.16.4</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
             <groupId>com.comphenix.protocol</groupId>
             <artifactId>ProtocolLib</artifactId>
             <version>4.8.0</version>

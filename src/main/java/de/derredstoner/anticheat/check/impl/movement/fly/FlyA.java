@@ -29,6 +29,7 @@ public class FlyA extends Check {
                     || data.movementProcessor.touchingLiquid
                     || !data.movementProcessor.isChunkLoaded
                     || data.player.getAllowFlight()
+                    || data.actionProcessor.elytraFlying
                     || data.movementProcessor.getVelocityV() > 0
                     || data.movementProcessor.positionsSinceTeleport < 3) {
                 return;

@@ -1,7 +1,7 @@
 package de.derredstoner.anticheat.check;
 
-import de.derredstoner.anticheat.check.impl.combat.aim.*;
 import de.derredstoner.anticheat.check.impl.combat.hitbox.*;
+import de.derredstoner.anticheat.check.impl.combat.aim.*;
 import de.derredstoner.anticheat.check.impl.combat.killaura.*;
 import de.derredstoner.anticheat.check.impl.combat.velocity.*;
 import de.derredstoner.anticheat.check.impl.movement.fly.*;
@@ -40,7 +40,6 @@ public class CheckManager {
         checks.add(new FlyB(data));
 
         checks.add(new JesusA(data));
-        checks.add(new JesusB(data));
 
         checks.add(new MoveA(data));
         checks.add(new MoveB(data));

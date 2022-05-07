@@ -28,6 +28,7 @@ public class FlyB extends Check {
             if(event.isMoving()) {
                 if(data.movementProcessor.positionsSinceTeleport < 3
                         || data.movementProcessor.getVelocityV() > 0
+                        || data.actionProcessor.elytraFlying
                         || data.movementProcessor.flightTicks < 10
                         || data.movementProcessor.collidingHorizontally
                         || data.connectionProcessor.totalTicks - data.actionProcessor.lastBlockPlace < 3

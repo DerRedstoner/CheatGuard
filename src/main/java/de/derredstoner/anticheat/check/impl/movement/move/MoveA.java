@@ -26,6 +26,7 @@ public class MoveA extends Check {
         if(wrappedPacket instanceof WrappedPacketPlayInFlying) {
             if(data.player.isInsideVehicle()
                     || data.movementProcessor.teleporting
+                    || data.actionProcessor.elytraFlying
                     || data.player.getGameMode().equals(GameMode.CREATIVE)
                     || data.player.getGameMode().equals(GameMode.SPECTATOR)) {
                 return;
