@@ -8,6 +8,7 @@ import de.derredstoner.anticheat.data.PlayerData;
 import de.derredstoner.anticheat.packet.wrapper.WrappedPacket;
 import de.derredstoner.anticheat.packet.wrapper.client.WrappedPacketPlayInFlying;
 import de.derredstoner.anticheat.util.PlayerUtil;
+import org.bukkit.Bukkit;
 import org.bukkit.WorldBorder;
 import org.bukkit.potion.PotionEffectType;
 
@@ -49,7 +50,7 @@ public class VelocityB extends Check {
 
             final double percentage = deltaXZ / predictedVelocity;
 
-            if(tick < 5 && !data.movementProcessor.clientGround && data.movementProcessor.lastClientGround) {
+            if(tick == 1) {
                 if(percentage > 0 && percentage < 0.9999) {
                     if(buffer++ > 1) {
                         flag("tick="+tick+"\npercentage="+(percentage*100.0F)+"\ndeltaXZ="+deltaXZ+"\npredicted="+predictedVelocity);

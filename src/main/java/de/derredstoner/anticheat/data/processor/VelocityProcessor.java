@@ -56,14 +56,6 @@ public class VelocityProcessor {
                 } else {
                     predictedVelocityH = predictedVelocityH * 0.91 - moveFlying;
                 }
-            } else if(velocityTicks == 2 && predictedVelocityH > 0) {
-                if(data.movementProcessor.lastLastClientGround) {
-                    predictedVelocityH = predictedVelocityH * 0.6 * 0.91 - moveFlying;
-                } else {
-                    predictedVelocityH = predictedVelocityH * 0.91 - moveFlying;
-                }
-            } else if(velocityTicks > 2 && velocityTicks <= 10 && predictedVelocityH > 0) {
-                predictedVelocityH = predictedVelocityH * 0.91 - moveFlying;
             }
 
             predictedVelocityH = Math.max(predictedVelocityH, 0);
