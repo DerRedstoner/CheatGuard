@@ -28,6 +28,11 @@ public class BadPacketB extends Check {
         if(wrappedPacket instanceof WrappedPacketPlayInFlying) {
             WrappedPacketPlayInFlying wrapper = (WrappedPacketPlayInFlying) wrappedPacket;
 
+            if(data.connectionProcessor.totalTicks < 20 || data.movementProcessor.positionsSinceTeleport < 3) {
+                ticks = 0;
+                return;
+            }
+
             if(wrapper.isMoving()) {
                 if(ticks > 20) {
                     flag("ticks="+ticks);

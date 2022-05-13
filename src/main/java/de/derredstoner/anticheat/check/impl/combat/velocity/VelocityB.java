@@ -16,7 +16,8 @@ import org.bukkit.potion.PotionEffectType;
         name = "Velocity (B)",
         description = "Checks for horizontal velocity modifications",
         category = Category.COMBAT,
-        subCategory = SubCategory.VELOCITY
+        subCategory = SubCategory.VELOCITY,
+        experimental = true
 )
 public class VelocityB extends Check {
 

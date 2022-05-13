@@ -1,6 +1,5 @@
 package de.derredstoner.anticheat.check.impl.combat.killaura;
 
-import com.comphenix.protocol.wrappers.EnumWrappers;
 import de.derredstoner.anticheat.check.Check;
 import de.derredstoner.anticheat.check.annotation.CheckInfo;
 import de.derredstoner.anticheat.check.categories.Category;
@@ -10,20 +9,21 @@ import de.derredstoner.anticheat.packet.wrapper.WrappedPacket;
 import de.derredstoner.anticheat.packet.wrapper.client.WrappedPacketPlayInBlockPlace;
 import de.derredstoner.anticheat.packet.wrapper.client.WrappedPacketPlayInFlying;
 import de.derredstoner.anticheat.packet.wrapper.client.WrappedPacketPlayInUseEntity;
+import org.bukkit.Bukkit;
 
 @CheckInfo(
-        name = "KillAura (C)",
-        description = "Checks for blocking right after attack",
+        name = "KillAura (D)",
+        description = "Checks for blocking right before attack",
         category = Category.COMBAT,
         subCategory = SubCategory.KILLAURA
 )
-public class KillAuraC extends Check {
+public class KillAuraD extends Check {
 
-    public KillAuraC(PlayerData data) {
+    public KillAuraD(PlayerData data) {
         super(data);
     }
 
-    private boolean sent;
+    private boolean placed;
 
     @Override
     public void handle(WrappedPacket wrappedPacket) {
@@ -32,18 +32,19 @@ public class KillAuraC extends Check {
 
             final int face = wrapper.getFace();
 
-            if(face == 255 && sent) {
-                flag();
-                sent = false;
+            if(face == 255 && data.movementProcessor.deltaXZ > 0.2) {
+                placed = true;
             }
         } else if(wrappedPacket instanceof WrappedPacketPlayInUseEntity) {
-            WrappedPacketPlayInUseEntity wrapper = (WrappedPacketPlayInUseEntity) wrappedPacket;
+            if(placed) {
+                if(buffer++ > 3) {
+                    flag();
+                }
 
-            if(wrapper.getAction() == EnumWrappers.EntityUseAction.ATTACK && data.movementProcessor.deltaXZ > 0.2) {
-                sent = true;
+                placed = false;
             }
         } else if(wrappedPacket instanceof WrappedPacketPlayInFlying) {
-            sent = false;
+            placed = false;
         }
     }
 

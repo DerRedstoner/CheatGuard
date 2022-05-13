@@ -51,7 +51,7 @@ public class MovementProcessor {
 
             if(wrapper.isMoving()) {
                 lastLocation = (location.getX() == 0 && location.getY() == 0 && location.getZ() == 0) ? new CustomLocation(x, y, z, yaw, pitch) : location;
-                location = new CustomLocation(x, y, z, yaw, pitch);
+                location = new CustomLocation(x, y, z, this.yaw, this.pitch);
 
                 this.lastDeltaX = this.deltaX;
                 this.lastDeltaY = this.deltaY;

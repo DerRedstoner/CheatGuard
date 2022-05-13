@@ -36,7 +36,7 @@ public class AimB extends Check {
                 final float deltaPitch = data.movementProcessor.deltaPitch;
 
                 if(deltaPitch != 0 && (deltaPitch % 0.1 == 0 || deltaPitch % 0.25 == 0)) {
-                    if(buffer++ > 5) {
+                    if(buffer++ > 2) {
                         flag("deltaPitch="+deltaPitch);
                     }
                 } else buffer = Math.max(0, buffer - 0.25);

@@ -12,12 +12,31 @@ public class CustomLocation {
     private float yaw, pitch;
     private long timeStamp;
 
+    public long getTick() {
+        return tick;
+    }
+
+    public void setTick(long tick) {
+        this.tick = tick;
+    }
+
+    private long tick;
+
     public CustomLocation(double x, double y, double z) {
         this.x = x;
         this.y = y;
         this.z = z;
 
         timeStamp = System.currentTimeMillis();
+    }
+
+    public CustomLocation(double x, double y, double z, long tick) {
+        this.x = x;
+        this.y = y;
+        this.z = z;
+        this.yaw = yaw;
+        this.pitch = pitch;
+        this.tick = tick;
     }
 
     public CustomLocation(double x, double y, double z, float yaw, float pitch) {

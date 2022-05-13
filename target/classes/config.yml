@@ -80,10 +80,30 @@ COMBAT:
     enabled: true
     bannable: true
     banVL: 10
+  AutoClickerA:
+    enabled: true
+    bannable: false
+    banVL: 10
+  AutoClickerB:
+    enabled: true
+    bannable: false
+    banVL: 12
+  AutoClickerC:
+    enabled: true
+    bannable: false
+    banVL: 10
+  AutoClickerD:
+    enabled: true
+    bannable: false
+    banVL: 5
   HitboxA:
     enabled: true
     bannable: true
     banVL: 1
+  HitboxB:
+    enabled: true
+    bannable: true
+    banVL: 20
   KillAuraA:
     enabled: true
     bannable: true
@@ -96,6 +116,24 @@ COMBAT:
     enabled: true
     bannable: true
     banVL: 5
+  KillAuraD:
+    enabled: true
+    bannable: true
+    banVL: 5
+  KillAuraE:
+    enabled: true
+    bannable: true
+    banVL: 3
+  KillAuraF:
+    enabled: true
+    bannable: true
+    banVL: 15
+  ReachA:
+    enabled: true
+    bannable: true
+    banVL: 10
+    settings:
+      max-reach: 3.03
   VelocityA:
     enabled: true
     bannable: true
@@ -212,3 +250,53 @@ PACKET:
     enabled: true
     bannable: true
     banVL: 15
+
+PLAYER:
+  InventoryA:
+    enabled: true
+    bannable: true
+    banVL: 5
+  InventoryB:
+    enabled: true
+    bannable: true
+    banVL: 8
+  InventoryC:
+    enabled: true
+    bannable: true
+    banVL: 15
+  ScaffoldA:
+    enabled: true
+    bannable: true
+    banVL: 5
+  ScaffoldB:
+    enabled: true
+    bannable: true
+    banVL: 7
+  ScaffoldC:
+    enabled: true
+    bannable: true
+    banVL: 10
+  ScaffoldD:
+    enabled: true
+    bannable: true
+    banVL: 1
+  ScaffoldE:
+    enabled: true
+    bannable: true
+    banVL: 8
+  ScaffoldF:
+    enabled: true
+    bannable: true
+    banVL: 8
+  ScaffoldG:
+    enabled: true
+    bannable: true
+    banVL: 2
+  ScaffoldH:
+    enabled: true
+    bannable: true
+    banVL: 10
+  ScaffoldI:
+    enabled: true
+    bannable: false
+    banVL: 20

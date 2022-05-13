@@ -5,6 +5,7 @@ import de.derredstoner.anticheat.check.annotation.CheckInfo;
 import de.derredstoner.anticheat.data.PlayerData;
 import de.derredstoner.anticheat.packet.wrapper.WrappedPacket;
 import de.derredstoner.anticheat.util.CustomLocation;
+import lombok.Getter;
 import net.md_5.bungee.api.chat.ClickEvent;
 import net.md_5.bungee.api.chat.ComponentBuilder;
 import net.md_5.bungee.api.chat.HoverEvent;
@@ -12,7 +13,6 @@ import net.md_5.bungee.api.chat.TextComponent;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
-import org.bukkit.scheduler.BukkitRunnable;
 
 import java.util.List;
 
@@ -20,7 +20,8 @@ public class Check {
 
     protected PlayerData data;
 
-    private final CheckInfo checkInfo;
+    @Getter
+    protected final CheckInfo checkInfo;
 
     private final boolean enabled, bannable;
     private final int banVL;
@@ -40,11 +41,11 @@ public class Check {
         this.enabled = CheatGuard.getInstance().config.getConfig().getBoolean(checkInfo.category().name()+"."+checkName+".enabled");
     }
 
-    protected void flag() {
+    public void flag() {
         this.flag("");
     }
 
-    protected void flag(String debug) {
+    public void flag(String debug) {
         if(!enabled || CheatGuard.getInstance().serverWatcher.getServerTicks() < 20) {
             return;
         }

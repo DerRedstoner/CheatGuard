@@ -27,6 +27,7 @@ public class CheatGuardCommand implements CommandExecutor {
                                     "§f[§9CheatGuard§f] §bShowing info for §f"+targetPlayer.getName()+"§7:\n"+
                                             "§bGamemode§7: §f"+targetData.player.getGameMode()+"\n"+
                                             "§bPing§7: §f"+targetData.connectionProcessor.transactionPing+" ms\n"+
+                                            "§bVersion§7: §f"+targetData.version+"\n"+
                                             "§bSensitivity§7: §f"+targetData.sensitivityProcessor.sensitivityPercentage+" %"
                             );
                         }

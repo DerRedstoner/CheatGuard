@@ -1,5 +1,9 @@
 package de.derredstoner.anticheat.util;
 
+import com.comphenix.protocol.wrappers.Pair;
+
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 public class MathUtil {
@@ -76,6 +80,73 @@ public class MathUtil {
         } catch (StackOverflowError e) {
             return 0;
         }
+    }
+
+    public static double getStandardDeviation(final Collection<? extends Number> data) {
+        final double variance = getVariance(data);
+        return Math.sqrt(variance);
+    }
+
+    public static double getVariance(final Collection<? extends Number> data) {
+        int count = 0;
+
+        double sum = 0.0;
+        double variance = 0.0;
+
+        double average;
+
+        for (final Number number : data) {
+            sum += number.doubleValue();
+            ++count;
+        }
+
+        average = sum / count;
+
+        for (final Number number : data) {
+            variance += Math.pow(number.doubleValue() - average, 2.0);
+        }
+
+        return variance;
+    }
+
+    public static Pair<List<Double>, List<Double>> getOutliers(final Collection<? extends Number> collection) {
+        final List<Double> values = new ArrayList<>();
+
+        for (final Number number : collection) {
+            values.add(number.doubleValue());
+        }
+
+        final double q1 = getMedian(values.subList(0, values.size() / 2));
+        final double q3 = getMedian(values.subList(values.size() / 2, values.size()));
+
+        final double iqr = Math.abs(q1 - q3);
+        final double lowThreshold = q1 - 1.5 * iqr, highThreshold = q3 + 1.5 * iqr;
+
+        final Pair<List<Double>, List<Double>> tuple = new Pair<>(new ArrayList<>(), new ArrayList<>());
+
+        for (final Double value : values) {
+            if (value < lowThreshold) {
+                tuple.getFirst().add(value);
+            }
+            else if (value > highThreshold) {
+                tuple.getSecond().add(value);
+            }
+        }
+
+        return tuple;
+    }
+
+    private static double getMedian(final List<Double> data) {
+        if (data.size() % 2 == 0) {
+            return (data.get(data.size() / 2) + data.get(data.size() / 2 - 1)) / 2;
+        } else {
+            return data.get(data.size() / 2);
+        }
+    }
+
+    public static int floor(double num) {
+        int var = (int) num;
+        return num < (double) var ? var - 1 : var;
     }
 
     public static boolean isAlmostEqual(float num1, float num2) {

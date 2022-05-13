@@ -7,43 +7,39 @@ import de.derredstoner.anticheat.check.categories.Category;
 import de.derredstoner.anticheat.check.categories.SubCategory;
 import de.derredstoner.anticheat.data.PlayerData;
 import de.derredstoner.anticheat.packet.wrapper.WrappedPacket;
-import de.derredstoner.anticheat.packet.wrapper.client.WrappedPacketPlayInBlockPlace;
-import de.derredstoner.anticheat.packet.wrapper.client.WrappedPacketPlayInFlying;
+import de.derredstoner.anticheat.packet.wrapper.client.WrappedPacketPlayInArmAnimation;
 import de.derredstoner.anticheat.packet.wrapper.client.WrappedPacketPlayInUseEntity;
 
 @CheckInfo(
-        name = "KillAura (C)",
-        description = "Checks for blocking right after attack",
+        name = "KillAura (E)",
+        description = "Checks for noswing",
         category = Category.COMBAT,
         subCategory = SubCategory.KILLAURA
 )
-public class KillAuraC extends Check {
+public class KillAuraE extends Check {
 
-    public KillAuraC(PlayerData data) {
+    public KillAuraE(PlayerData data) {
         super(data);
     }
 
-    private boolean sent;
+    private int hits, swings;
 
     @Override
     public void handle(WrappedPacket wrappedPacket) {
-        if(wrappedPacket instanceof WrappedPacketPlayInBlockPlace) {
-            WrappedPacketPlayInBlockPlace wrapper = (WrappedPacketPlayInBlockPlace) wrappedPacket;
-
-            final int face = wrapper.getFace();
-
-            if(face == 255 && sent) {
-                flag();
-                sent = false;
-            }
+        if(wrappedPacket instanceof WrappedPacketPlayInArmAnimation) {
+            swings++;
         } else if(wrappedPacket instanceof WrappedPacketPlayInUseEntity) {
             WrappedPacketPlayInUseEntity wrapper = (WrappedPacketPlayInUseEntity) wrappedPacket;
 
-            if(wrapper.getAction() == EnumWrappers.EntityUseAction.ATTACK && data.movementProcessor.deltaXZ > 0.2) {
-                sent = true;
+            if(wrapper.getAction() == EnumWrappers.EntityUseAction.ATTACK) {
+                if(hits++ > 3) {
+                    if(swings < hits) {
+                        flag("swings="+swings+"\nhits="+hits);
+                    }
+
+                    swings = hits = 0;
+                }
             }
-        } else if(wrappedPacket instanceof WrappedPacketPlayInFlying) {
-            sent = false;
         }
     }
 

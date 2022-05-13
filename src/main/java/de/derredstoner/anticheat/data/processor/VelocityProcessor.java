@@ -43,8 +43,6 @@ public class VelocityProcessor {
 
             ++velocityTicks;
 
-            double moveFlying = 0.13;
-
             if(data.player.hasPotionEffect(PotionEffectType.SPEED)) {
                 int amplifier = PlayerUtil.getAmplifier(data.player, PotionEffectType.SPEED);
                 predictedVelocityH = (predictedVelocityH * Math.pow(0.9, amplifier)) - 0.01;
@@ -52,9 +50,9 @@ public class VelocityProcessor {
 
             if(velocityTicks == 1) {
                 if(!data.movementProcessor.clientGround && data.movementProcessor.lastClientGround) {
-                    predictedVelocityH = predictedVelocityH - moveFlying;
+                    predictedVelocityH = predictedVelocityH - 0.13;
                 } else {
-                    predictedVelocityH = predictedVelocityH * 0.91 - moveFlying;
+                    predictedVelocityH = predictedVelocityH * 0.91 - 0.13;
                 }
             }
 
