@@ -4,4 +4,4 @@
 
 **Download:** https://www.spigotmc.org/resources/cheatguard-anticheat.75147/
 
-**Discord: DerRedstoner#0001**
+**Discord: https://discord.gg/5EKqmWeURP**
