@@ -1,6 +1,5 @@
 package de.derredstoner.anticheat.handler.watcher;
 
-import com.viaversion.viaversion.api.Via;
 import de.derredstoner.anticheat.CheatGuard;
 import org.bukkit.Bukkit;
 
@@ -16,7 +15,7 @@ public class ServerWatcher {
         watchTps();
 
         this.exemptTps = CheatGuard.getInstance().config.getConfig().getDouble("settings.exempt-tps");
-        this.version = Via.getPlatform().getPlatformVersion().split(" ")[Via.getPlatform().getPlatformVersion().split(" ").length-1].replace(")", "");
+        this.version = Bukkit.getVersion().split("MC: ")[1].replace(")", "");
     }
 
     private void tick() {

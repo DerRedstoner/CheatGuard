@@ -8,11 +8,14 @@ import de.derredstoner.anticheat.data.PlayerData;
 import de.derredstoner.anticheat.packet.wrapper.WrappedPacket;
 import de.derredstoner.anticheat.packet.wrapper.client.WrappedPacketPlayInBlockPlace;
 import de.derredstoner.anticheat.packet.wrapper.client.WrappedPacketPlayInFlying;
+import de.derredstoner.anticheat.util.PlayerUtil;
+import org.bukkit.Bukkit;
 import org.bukkit.Material;
+import org.bukkit.potion.PotionEffectType;
 
 @CheckInfo(
         name = "Scaffold (I)",
-        description = "Checks for safewalk",
+        description = "Checks for sprinting while bridging",
         category = Category.PLAYER,
         subCategory = SubCategory.SCAFFOLD
 )
@@ -23,34 +26,43 @@ public class ScaffoldI extends Check {
     }
 
     private long placedTicks;
-    private double lastLastAccel, lastAccel;
 
     @Override
     public void handle(WrappedPacket wrappedPacket) {
         if(wrappedPacket instanceof WrappedPacketPlayInFlying) {
-            if(++placedTicks < 5 && isBridging() && !data.actionProcessor.sneaking && !data.player.getAllowFlight() && data.movementProcessor.positionsSinceTeleport > 2) {
-                final double accel = data.movementProcessor.deltaXZ - data.movementProcessor.lastDeltaXZ;
+            WrappedPacketPlayInFlying wrapper = (WrappedPacketPlayInFlying) wrappedPacket;
 
-                if(accel < 0.001 && lastAccel < 0.001 && lastLastAccel > 0.21) {
-                    flag("1\naccel="+(float)accel+"\nlastAccel="+(float)lastAccel+"\nlastLastAccel="+(float)lastLastAccel);
-                }
-
-                if(accel > 0.01 && accel < 0.05 && lastAccel > 0.01 && lastAccel < 0.05 && lastLastAccel < -0.1) {
-                    flag("2\naccel="+(float)accel+"\nlastAccel="+(float)lastAccel+"\nlastLastAccel="+(float)lastLastAccel);
-                }
-
-                lastLastAccel = lastAccel;
-                lastAccel = accel;
+            if(!data.movementProcessor.clientGround || data.movementProcessor.getVelocityH() > 0) {
+                buffer = 0;
+                return;
             }
+
+            double deltaXZ = data.movementProcessor.deltaXZ;
+            double maxDeltaXZ = 0.23 + (data.player.getWalkSpeed() - 0.2F) * 1.6F + PlayerUtil.getAmplifier(data.player, PotionEffectType.SPEED) * 0.048;
+
+            if(wrapper.isMoving() && isBridging() && deltaXZ > maxDeltaXZ && placedTicks <= 1) {
+                if(buffer++ > 2) {
+                    flag("placedTicks="+placedTicks+"\ndeltaXZ="+deltaXZ+"\nmaxDeltaXZ="+maxDeltaXZ);
+                }
+            } else buffer = Math.max(0, buffer - 0.05);
+
+            placedTicks++;
         } else if(wrappedPacket instanceof WrappedPacketPlayInBlockPlace) {
-            if(data.player.getItemInHand().getType().isBlock()) {
+            WrappedPacketPlayInBlockPlace wrapper = (WrappedPacketPlayInBlockPlace) wrappedPacket;
+
+            if(wrapper.getFace() != 255
+                    && wrapper.getFacingY() != 0
+                    && wrapper.getFacingY() != 1
+                    && Math.abs(wrapper.getBlockPosition().getX() - data.movementProcessor.location.getX()) < 1.5
+                    && wrapper.getBlockPosition().getY() < data.movementProcessor.location.getY()
+                    && Math.abs(wrapper.getBlockPosition().getZ() - data.movementProcessor.location.getZ()) < 1.5) {
                 placedTicks = 0;
             }
         }
     }
 
     public boolean isBridging() {
-        return data.player.getLocation().clone().subtract(0, 2, 0).getBlock().getType() == Material.AIR;
+        return data.player.getLocation().clone().subtract(0, 2.5, 0).getBlock().getType() == Material.AIR;
     }
 
 }

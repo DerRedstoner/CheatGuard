@@ -300,3 +300,7 @@ PLAYER:
     enabled: true
     bannable: false
     banVL: 20
+  ScaffoldJ:
+    enabled: true
+    bannable: true
+    banVL: 5

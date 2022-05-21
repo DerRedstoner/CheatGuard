@@ -33,8 +33,7 @@ public class SpeedB extends Check {
             if(data.movementProcessor.teleporting
                     || data.player.getAllowFlight()
                     || data.movementProcessor.touchingLiquid
-                    || data.actionProcessor.elytraFlying
-                    || data.movementProcessor.getVelocityH() > 0) {
+                    || data.actionProcessor.elytraFlying) {
                 return;
             }
 
@@ -105,6 +104,10 @@ public class SpeedB extends Check {
 
                 if(data.player.getWalkSpeed() > 0.2) {
                     prediction += (data.player.getWalkSpeed() - 0.2F) * 1.6F;
+                }
+
+                if(data.velocityProcessor.velocityTicks <= 1) {
+                    prediction += data.velocityProcessor.predictedVelocityH;
                 }
 
                 prediction += 1E-4;

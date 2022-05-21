@@ -79,7 +79,7 @@ public class VelocityProcessor {
                 double y = wrapper.getVelocityY() / 8000d;
                 double z = wrapper.getVelocityZ() / 8000d;
 
-                transactionId = data.connectionProcessor.transactionID;
+                transactionId = (short) (data.connectionProcessor.transactionID - 1);
 
                 velocity = new Vector(x, y, z);
             }
