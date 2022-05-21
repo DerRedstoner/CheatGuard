@@ -24,6 +24,7 @@ gradle-app.setting
 ## IntelliJ
 ##############################
 out/
+target/
 .idea/
 .idea_modules/
 *.iml
