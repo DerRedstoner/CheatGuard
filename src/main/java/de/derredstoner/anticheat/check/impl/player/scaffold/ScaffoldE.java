@@ -30,7 +30,7 @@ public class ScaffoldE extends Check {
         if(wrappedPacket instanceof WrappedPacketPlayInBlockPlace) {
             WrappedPacketPlayInBlockPlace wrapper = (WrappedPacketPlayInBlockPlace) wrappedPacket;
 
-            if(wrapper.getBlockPosition().getY() == -1) {
+            if(wrapper.getBlockPosition() == null || wrapper.getBlockPosition().getY() == -1) {
                 return;
             }
 

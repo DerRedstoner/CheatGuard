@@ -26,6 +26,8 @@ public class ScaffoldG extends Check {
         if(wrappedPacket instanceof WrappedPacketPlayInBlockPlace) {
             WrappedPacketPlayInBlockPlace wrapper = (WrappedPacketPlayInBlockPlace) wrappedPacket;
 
+            if(wrapper.getBlockPosition() == null) return;
+
             BlockPosition blockPosition = wrapper.getBlockPosition();
             int face = wrapper.getFace();
 

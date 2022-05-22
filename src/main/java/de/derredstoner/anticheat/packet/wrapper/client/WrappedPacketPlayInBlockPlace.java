@@ -1,5 +1,6 @@
 package de.derredstoner.anticheat.packet.wrapper.client;
 
+import de.derredstoner.anticheat.CheatGuard;
 import de.derredstoner.anticheat.packet.wrapper.WrappedPacket;
 import com.comphenix.protocol.events.PacketContainer;
 import com.comphenix.protocol.reflect.StructureModifier;
@@ -18,15 +19,25 @@ public class WrappedPacketPlayInBlockPlace extends WrappedPacket {
     private final float facingZ;
 
     public WrappedPacketPlayInBlockPlace(PacketContainer packetContainer) {
-        this.blockPosition = packetContainer.getBlockPositionModifier().read(0);
-        this.face = packetContainer.getIntegers().read(0);
-        this.itemStack = packetContainer.getItemModifier().read(0);
+        if(CheatGuard.getInstance().serverWatcher.is1_8()) {
+            this.blockPosition = packetContainer.getBlockPositionModifier().read(0);
+            this.face = packetContainer.getIntegers().read(0);
+            this.itemStack = packetContainer.getItemModifier().read(0);
 
-        StructureModifier<Float> floats = packetContainer.getFloat();
+            StructureModifier<Float> floats = packetContainer.getFloat();
 
-        this.facingX = floats.read(0);
-        this.facingY = floats.read(1);
-        this.facingZ = floats.read(2);
+            this.facingX = floats.read(0);
+            this.facingY = floats.read(1);
+            this.facingZ = floats.read(2);
+        } else {
+            this.blockPosition = null;
+            this.face = 0;
+            this.itemStack = null;
+
+            this.facingX = 0;
+            this.facingY = 0;
+            this.facingZ = 0;
+        }
     }
 
 }

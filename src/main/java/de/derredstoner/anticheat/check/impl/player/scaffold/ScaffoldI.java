@@ -50,6 +50,8 @@ public class ScaffoldI extends Check {
         } else if(wrappedPacket instanceof WrappedPacketPlayInBlockPlace) {
             WrappedPacketPlayInBlockPlace wrapper = (WrappedPacketPlayInBlockPlace) wrappedPacket;
 
+            if(wrapper.getBlockPosition() == null) return;
+
             if(wrapper.getFace() != 255
                     && wrapper.getFacingY() != 0
                     && wrapper.getFacingY() != 1

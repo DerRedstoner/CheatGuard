@@ -13,6 +13,7 @@ import de.derredstoner.anticheat.check.impl.movement.speed.*;
 import de.derredstoner.anticheat.check.impl.packet.badpacket.*;
 import de.derredstoner.anticheat.check.impl.packet.nofall.*;
 import de.derredstoner.anticheat.check.impl.packet.timer.*;
+import de.derredstoner.anticheat.check.impl.player.baritone.BaritoneA;
 import de.derredstoner.anticheat.check.impl.player.inventory.*;
 import de.derredstoner.anticheat.check.impl.player.scaffold.*;
 import de.derredstoner.anticheat.data.PlayerData;
@@ -30,6 +31,7 @@ public class CheckManager {
         checks.add(new AimC(data));
         checks.add(new AimD(data));
         checks.add(new AimE(data));
+        checks.add(new AimF(data));
 
         checks.add(new AutoClickerA(data));
         checks.add(new AutoClickerB(data));
@@ -82,6 +84,8 @@ public class CheckManager {
         checks.add(new NoFallB(data));
 
         checks.add(new TimerA(data));
+
+        checks.add(new BaritoneA(data));
 
         checks.add(new InventoryA(data));
         checks.add(new InventoryB(data));

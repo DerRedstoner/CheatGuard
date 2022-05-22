@@ -29,9 +29,11 @@ public class ScaffoldH extends Check {
         if(wrappedPacket instanceof WrappedPacketPlayInFlying) {
             placed = false;
         } else if(wrappedPacket instanceof WrappedPacketPlayInBlockPlace) {
-            WrappedPacketPlayInBlockPlace packet = (WrappedPacketPlayInBlockPlace) wrappedPacket;
+            WrappedPacketPlayInBlockPlace wrapper = (WrappedPacketPlayInBlockPlace) wrappedPacket;
 
-            if(packet.getFacingY() == 0.0 || !packet.getItemStack().getType().isBlock()) return;
+            if(wrapper.getBlockPosition() == null) return;
+
+            if(wrapper.getFacingY() == 0.0 || !wrapper.getItemStack().getType().isBlock()) return;
 
             placed = true;
         } else if(wrappedPacket instanceof WrappedPacketPlayInHeldItemSlot) {

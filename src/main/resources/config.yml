@@ -80,6 +80,10 @@ COMBAT:
     enabled: true
     bannable: true
     banVL: 10
+  AimF:
+    enabled: true
+    bannable: false
+    banVL: 20
   AutoClickerA:
     enabled: true
     bannable: false
@@ -252,6 +256,10 @@ PACKET:
     banVL: 15
 
 PLAYER:
+  BaritoneA:
+    enabled: true
+    bannable: false
+    banVL: 10
   InventoryA:
     enabled: true
     bannable: true
