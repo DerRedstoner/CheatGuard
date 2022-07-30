@@ -7,8 +7,8 @@ import de.derredstoner.anticheat.config.Config;
 import de.derredstoner.anticheat.handler.watcher.ServerWatcher;
 import de.derredstoner.anticheat.listener.BukkitListener;
 import de.derredstoner.anticheat.packet.handler.PacketHandler;
-import dev.thomazz.pledge.api.Pledge;
 import lombok.Getter;
+import org.bstats.bukkit.Metrics;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -26,8 +26,6 @@ public class CheatGuard extends JavaPlugin {
 
     public ServerWatcher serverWatcher;
 
-    private Pledge pledge;
-
     public final Executor packetThread = Executors.newSingleThreadExecutor();
     public final Executor alertThread = Executors.newSingleThreadExecutor();
 
@@ -41,14 +39,15 @@ public class CheatGuard extends JavaPlugin {
 
         this.serverWatcher = new ServerWatcher();
 
-        this.pledge = Pledge.build().range(Short.MIN_VALUE, (short) 0);
-        this.pledge.start(this);
-
         Bukkit.getPluginManager().registerEvents(new BukkitListener(), this);
 
         ProtocolLibrary.getProtocolManager().addPacketListener(new PacketHandler(this));
 
         getCommand("cheatguard").setExecutor(new CheatGuardCommand());
+
+        if(config.getConfig().getBoolean("settings.metrics")) {
+            Metrics metrics = new Metrics(this, 15947);
+        }
     }
 
     @Override

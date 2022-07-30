@@ -38,10 +38,12 @@ public class VelocityA extends Check {
 
             final double percentage = deltaY / predictedVelocity;
 
-            if(tick < 5 && predictedVelocity > 0 && !data.movementProcessor.clientGround && data.movementProcessor.lastClientGround) {
+            if(tick < 3 && predictedVelocity > 0) {
                 if(percentage >= 0 && percentage < 0.9999) {
-                    flag("percentage="+(percentage*100F)+"\ndeltaY="+deltaY+"\npredicted="+predictedVelocity);
-                }
+                    if(buffer++ > 1) {
+                        flag("tick="+tick+"\npercentage="+(percentage*100F)+"\ndeltaY="+deltaY+"\npredicted="+predictedVelocity);
+                    }
+                } else buffer = Math.max(0, buffer - 0.1);
             }
         }
     }

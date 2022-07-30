@@ -49,6 +49,9 @@ public class Check {
         if(!enabled || CheatGuard.getInstance().serverWatcher.getServerTicks() < 20) {
             return;
         }
+        if(CheatGuard.getInstance().config.getConfig().getString("settings.op-bypass").equalsIgnoreCase("full") && data.player.isOp()) {
+            return;
+        }
 
         this.violations++;
         this.buffer = Math.max(0, buffer - 1);
@@ -100,7 +103,7 @@ public class Check {
 
         if(bannable && violations >= banVL && !checkInfo.experimental()) {
             if(CheatGuard.getInstance().config.getConfig().getBoolean("punishments.enabled")
-                    && (!((CheatGuard.getInstance().config.getConfig().getString("settings.op-bypass").equalsIgnoreCase("full") || CheatGuard.getInstance().config.getConfig().getString("settings.op-bypass").equalsIgnoreCase("punish")) && data.player.isOp()) || !data.player.isOp())) {
+                    && (!(CheatGuard.getInstance().config.getConfig().getString("settings.op-bypass").equalsIgnoreCase("punish") && data.player.isOp()) || !data.player.isOp())) {
                 List<String> commands = CheatGuard.getInstance().config.getConfig().getStringList("punishments.commands");
 
                 Bukkit.getScheduler().runTask(CheatGuard.getInstance(), () -> {

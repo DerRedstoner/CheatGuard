@@ -33,6 +33,7 @@ public class FlyB extends Check {
                         || data.movementProcessor.collidingHorizontally
                         || data.connectionProcessor.totalTicks - data.actionProcessor.lastBlockPlace < 3
                         || !data.movementProcessor.isChunkLoaded) {
+                    buffer = 0;
                     return;
                 }
 
@@ -40,7 +41,7 @@ public class FlyB extends Check {
                         && data.movementProcessor.clientAirTicks > 1
                         && data.movementProcessor.deltaY >= data.movementProcessor.lastDeltaY
                         && data.movementProcessor.deltaY != 0.42F) {
-                    if(buffer++ > 1) {
+                    if(buffer++ > 2) {
                         flag("deltaY="+data.movementProcessor.deltaY+"\nlastDeltaY="+data.movementProcessor.lastDeltaY);
                         setback();
                     }

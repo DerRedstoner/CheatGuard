@@ -45,9 +45,9 @@ public class PacketHandler extends PacketAdapter {
             CheatGuard.getInstance().packetThread.execute(() -> {
                 data.actionProcessor.process(wrappedPacket);
                 data.sensitivityProcessor.process(wrappedPacket);
-                data.connectionProcessor.process(wrappedPacket);
                 data.movementProcessor.process(wrappedPacket);
                 data.velocityProcessor.process(wrappedPacket);
+                data.connectionProcessor.process(wrappedPacket);
 
                 if(!CheatGuard.getInstance().serverWatcher.isLagging()) {
                     data.getChecks().stream().forEach(check -> check.handle(wrappedPacket));

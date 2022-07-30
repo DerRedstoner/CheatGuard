@@ -8,6 +8,7 @@ import de.derredstoner.anticheat.data.PlayerData;
 import de.derredstoner.anticheat.packet.wrapper.WrappedPacket;
 import de.derredstoner.anticheat.packet.wrapper.client.WrappedPacketPlayInFlying;
 import de.derredstoner.anticheat.util.PlayerUtil;
+import org.bukkit.Bukkit;
 import org.bukkit.potion.PotionEffectType;
 
 @CheckInfo(
@@ -33,7 +34,10 @@ public class SpeedB extends Check {
             if(data.movementProcessor.teleporting
                     || data.player.getAllowFlight()
                     || data.movementProcessor.touchingLiquid
+                    || data.velocityProcessor.velocityTicks < 5
+                    || data.velocityProcessor.predictedVelocityH > 0
                     || data.actionProcessor.elytraFlying) {
+                buffer = 0;
                 return;
             }
 
@@ -106,8 +110,8 @@ public class SpeedB extends Check {
                     prediction += (data.player.getWalkSpeed() - 0.2F) * 1.6F;
                 }
 
-                if(data.velocityProcessor.velocityTicks <= 1) {
-                    prediction += data.velocityProcessor.predictedVelocityH;
+                if(data.velocityProcessor.velocityTicks < 3) {
+                    prediction += Math.hypot(data.velocityProcessor.velocityX, data.velocityProcessor.velocityZ);
                 }
 
                 prediction += 1E-4;

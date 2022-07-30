@@ -7,11 +7,6 @@ import de.derredstoner.anticheat.check.categories.SubCategory;
 import de.derredstoner.anticheat.data.PlayerData;
 import de.derredstoner.anticheat.packet.wrapper.WrappedPacket;
 import de.derredstoner.anticheat.packet.wrapper.client.WrappedPacketPlayInFlying;
-import de.derredstoner.anticheat.util.evicting.EvictingList;
-
-import java.util.Map;
-import java.util.function.Function;
-import java.util.stream.Collectors;
 
 @CheckInfo(
         name = "Aim (F)",

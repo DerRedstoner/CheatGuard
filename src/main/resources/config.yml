@@ -31,6 +31,9 @@ settings:
   #
   # Recommended: 18.0 - 19.5
   exempt-tps: 19.0
+  # - - ->  - - -> - - -> - - -> - - -> - - -> - - -> - - -> - - -> - - ->
+  # Disable this if you don't want to share anonymous data for monitoring plugin usage
+  metrics: true
 
 punishments:
   # - - ->  - - -> - - -> - - -> - - -> - - -> - - -> - - -> - - -> - - ->

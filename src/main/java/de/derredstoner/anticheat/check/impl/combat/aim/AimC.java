@@ -13,7 +13,8 @@ import de.derredstoner.anticheat.util.MathUtil;
         name = "Aim (C)",
         description = "Checks for invalid rotations",
         category = Category.COMBAT,
-        subCategory = SubCategory.AIM
+        subCategory = SubCategory.AIM,
+        experimental = true
 )
 public class AimC extends Check {
 
@@ -48,8 +49,8 @@ public class AimC extends Check {
 
                     final double sens = data.sensitivityProcessor.sensitivityPercentage;
 
-                    if(divisor < 0.009 && sens > 20 && deltaPitch < 20 && lastDeltaPitch < 20) {
-                        if(buffer++ > 5) {
+                    if(divisor < 0.005 && sens > 20 && deltaPitch < 20 && lastDeltaPitch < 20) {
+                        if(buffer++ > 10) {
                             flag("divisor="+divisor+"\nsens="+sens+"\ndeltaPitch="+deltaPitch+"\nlastDeltaPitch="+lastDeltaPitch);
                         }
                     } else buffer = Math.max(0, buffer - 0.25);

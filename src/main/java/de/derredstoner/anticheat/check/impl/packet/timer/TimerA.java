@@ -8,6 +8,9 @@ import de.derredstoner.anticheat.data.PlayerData;
 import de.derredstoner.anticheat.packet.wrapper.WrappedPacket;
 import de.derredstoner.anticheat.packet.wrapper.client.WrappedPacketPlayInFlying;
 import de.derredstoner.anticheat.packet.wrapper.server.WrappedPacketPlayOutPosition;
+import de.derredstoner.anticheat.util.MathUtil;
+import de.derredstoner.anticheat.util.evicting.EvictingList;
+import org.bukkit.Bukkit;
 
 @CheckInfo(
         name = "Timer (A)",
@@ -21,8 +24,8 @@ public class TimerA extends Check {
         super(data);
     }
 
+    private EvictingList<Long> samples = new EvictingList<>(40);
     private long balance = -50, lastFlying, ticks;
-    private boolean read;
 
     @Override
     public void handle(WrappedPacket wrappedPacket) {
@@ -32,13 +35,25 @@ public class TimerA extends Check {
             if(++ticks > 200 && lastFlying != 0L && data.movementProcessor.deltaXZ > 0) {
                 long delta = now - lastFlying;
 
+                if(delta >= 5) {
+                    samples.add(delta);
+                }
+
                 balance += 50L;
                 balance -= delta;
 
                 if(balance > 50L) {
-                    if(buffer++ > 4) {
-                        flag("delta="+delta+"\nbalance="+balance);
-                        setback();
+                    if(samples.isFull()) {
+                        double average = samples.stream().mapToDouble(value -> value).average().orElse(1);
+                        double deviation = MathUtil.getStandardDeviation(samples);
+                        double speed = 50 / average;
+
+                        if((speed >= 1.01 && deviation < 25) || speed > 1.05) {
+                            if(buffer++ > 0) {
+                                flag("speed="+speed+"\ndeviation="+deviation);
+                                setback();
+                            }
+                        } else buffer = Math.max(0, buffer - 0.01);
                     }
 
                     balance = -50L;

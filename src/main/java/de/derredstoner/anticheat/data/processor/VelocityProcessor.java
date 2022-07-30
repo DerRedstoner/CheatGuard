@@ -7,6 +7,9 @@ import de.derredstoner.anticheat.packet.wrapper.client.WrappedPacketPlayInTransa
 import de.derredstoner.anticheat.packet.wrapper.client.WrappedPacketPlayInUseEntity;
 import de.derredstoner.anticheat.packet.wrapper.server.WrappedPacketPlayOutEntityVelocity;
 import de.derredstoner.anticheat.util.PlayerUtil;
+import de.derredstoner.anticheat.util.Velocity;
+import de.derredstoner.anticheat.util.evicting.EvictingMap;
+import org.bukkit.Bukkit;
 import org.bukkit.potion.PotionEffectType;
 import org.bukkit.util.Vector;
 
@@ -17,8 +20,8 @@ public class VelocityProcessor {
     public double velocityX, velocityY, velocityZ, predictedVelocityY, predictedVelocityH;
     public int velocityTicks;
 
-    private short transactionId;
-    private Vector velocity = new Vector();
+    private short attackId;
+    private EvictingMap<Short,Vector> velocities = new EvictingMap<>(20);
 
     public VelocityProcessor(PlayerData data) {
         this.data = data;
@@ -26,7 +29,7 @@ public class VelocityProcessor {
 
     public void process(Object e) {
         if(e instanceof WrappedPacketPlayInFlying) {
-            if(velocityTicks > 0) {
+            if(velocityTicks >= 0) {
                 if(predictedVelocityY > 0) {
                     predictedVelocityY -= 0.08D;
                     predictedVelocityY *= 0.98F;
@@ -67,36 +70,44 @@ public class VelocityProcessor {
             WrappedPacketPlayInUseEntity event = (WrappedPacketPlayInUseEntity) e;
 
             if(event.getAction() == EnumWrappers.EntityUseAction.ATTACK) {
-                velocity.setX(velocity.getX() * 0.6F);
-                velocity.setZ(velocity.getZ() * 0.6F);
+                attackId = data.connectionProcessor.transactionID;
                 predictedVelocityH *= 0.6F;
             }
         } else if(e instanceof WrappedPacketPlayOutEntityVelocity) {
             WrappedPacketPlayOutEntityVelocity wrapper = (WrappedPacketPlayOutEntityVelocity) e;
 
             if(wrapper.getEntityId() == data.player.getEntityId()) {
-                double x = wrapper.getVelocityX() / 8000d;
-                double y = wrapper.getVelocityY() / 8000d;
-                double z = wrapper.getVelocityZ() / 8000d;
+                if(wrapper.getVelocityX() != 0 || wrapper.getVelocityY() != 0 || wrapper.getVelocityZ() != 0) {
+                    double x = wrapper.getVelocityX() / 8000d;
+                    double y = wrapper.getVelocityY() / 8000d;
+                    double z = wrapper.getVelocityZ() / 8000d;
 
-                transactionId = (short) (data.connectionProcessor.transactionID - 1);
+                    short transactionId = data.connectionProcessor.transactionID;
 
-                velocity = new Vector(x, y, z);
+                    velocities.put(transactionId, new Vector(x, y, z));
+                }
             }
         } else if(e instanceof WrappedPacketPlayInTransaction) {
             WrappedPacketPlayInTransaction wrapper = (WrappedPacketPlayInTransaction) e;
 
-            if(wrapper.getTransactionId() == transactionId) {
-                if(Math.hypot(velocity.getX(), velocity.getZ()) != 0) {
-                    velocityX = velocity.getX();
-                    velocityY = velocity.getY();
-                    velocityZ = velocity.getZ();
+            if(velocities.containsKey(wrapper.getTransactionId())) {
+                Vector velocity = velocities.get(wrapper.getTransactionId());
 
-                    predictedVelocityH = Math.hypot(Math.abs(velocity.getX()), Math.abs(velocity.getZ()));
-                    predictedVelocityY = velocity.getY();
-
-                    velocityTicks = 0;
+                if(attackId >= wrapper.getTransactionId()) {
+                    velocity.setX(velocity.getX() * 0.6F);
+                    velocity.setZ(velocity.getZ() * 0.6F);
                 }
+
+                velocityX = velocity.getX();
+                velocityY = velocity.getY();
+                velocityZ = velocity.getZ();
+
+                predictedVelocityH = Math.hypot(Math.abs(velocity.getX()), Math.abs(velocity.getZ()));
+                predictedVelocityY = velocity.getY();
+
+                velocityTicks = 0;
+
+                velocities.remove(wrapper.getTransactionId());
             }
         }
     }

@@ -51,7 +51,7 @@ public class VelocityB extends Check {
             final double percentage = deltaXZ / predictedVelocity;
 
             if(tick == 1) {
-                if(percentage > 0 && percentage < 0.999) {
+                if(percentage >= 0 && percentage < 0.999) {
                     if(buffer++ > 1) {
                         flag("tick="+tick+"\npercentage="+(percentage*100.0F)+"\ndeltaXZ="+deltaXZ+"\npredicted="+predictedVelocity);
                     }
