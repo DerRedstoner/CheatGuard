@@ -65,6 +65,7 @@ public class CheckManager {
         checks.add(new MoveE(data));
         checks.add(new MoveF(data));
         checks.add(new MoveG(data));
+        checks.add(new MoveH(data));
 
         checks.add(new SpeedA(data));
         checks.add(new SpeedB(data));

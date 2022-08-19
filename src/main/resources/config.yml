@@ -195,6 +195,10 @@ MOVEMENT:
     enabled: true
     bannable: true
     banVL: 10
+  MoveH:
+    enabled: true
+    bannable: true
+    banVL: 4
   SpeedA:
     enabled: true
     bannable: true
